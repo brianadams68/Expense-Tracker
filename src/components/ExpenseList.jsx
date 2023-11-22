@@ -27,7 +27,7 @@ const ExpenseList = ({ activeExpenses, completedExpenses, onEdit, onMarkAsDone, 
         <ul>
           {completedExpenses.map((expense) => (
             <li key={expense.id}>
-              {expense.title} - ${expense.amount}
+              {expense.title} - €{expense.amount}
             </li>
           ))}
         </ul>

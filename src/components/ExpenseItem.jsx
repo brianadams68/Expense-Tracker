@@ -8,6 +8,7 @@ const ExpenseItem = ({ expense, onEdit, onMarkAsDone, onDelete }) => {
 
   const handleUpdate = () => {
     onEdit(id, { title: updatedTitle, amount: updatedAmount });
+
     setIsEditing(false);
   };
 
