@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const ExpenseItem = ({ expense, onEdit, onMarkAsDone, onDelete }) => {
   const { id, title, amount, isDone } = expense;
@@ -21,38 +21,52 @@ const ExpenseItem = ({ expense, onEdit, onMarkAsDone, onDelete }) => {
               type="text"
               value={updatedTitle}
               onChange={(e) => setUpdatedTitle(e.target.value)}
-              className="mr-2 p-2 border rounded-md"
+              className="w-full sm:w-full md:w-32 mr-2 p-2 border rounded-md mb-2 sm:mb-0"
             />
             <input
               type="number"
               value={updatedAmount}
               onChange={(e) => setUpdatedAmount(e.target.value)}
-              className="mr-2 p-2 border rounded-md"
+              className="w-full sm:w-full md:w-20 mr-2 p-2 border rounded-md mb-2 sm:mb-0"
             />
-            <button onClick={handleUpdate} className="bg-green-500 text-white px-4 py-2 rounded-md">
+            <button
+              onClick={handleUpdate}
+              className="bg-green-500 text-white px-3 py-2 rounded-md"
+            >
               Update
             </button>
           </>
         ) : (
           <>
-            <div>
-              <span className="text-lg font-semibold">{title}</span>
-              <span className="ml-4 text-gray-600">€{amount}</span>
-            </div>
-            <div className="flex items-center">
-              {!isDone && (
-                <>
-                  <button onClick={() => setIsEditing(true)} className="text-blue-500 mr-2">
-                    Edit
-                  </button>
-                  <button onClick={() => onMarkAsDone(id)} className="text-green-500 mr-2">
-                    Done
-                  </button>
-                </>
-              )}
-              <button onClick={() => onDelete(id)} className="text-red-500">
-                Delete
-              </button>
+            <div className="max-w-md mx-auto bg-white p-6-md mt-8 sm:max-w-lg">
+              <div className="mb-2 text-center">
+                <span className="text-lg font-semibold">{title}</span>
+                <span className="mt-1 text-gray-600">€{amount}</span>
+              </div>
+              <div className="flex items-center flex-wrap justify-center">
+                {!isDone && (
+                  <>
+                    <button
+                      onClick={() => setIsEditing(true)}
+                      className="text-blue-500 px-2 py-1 mr-2 mb-2"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => onMarkAsDone(id)}
+                      className="text-green-500 px-2 py-1 mr-2 mb-2"
+                    >
+                      Done
+                    </button>
+                  </>
+                )}
+                <button
+                  onClick={() => onDelete(id)}
+                  className="text-red-500 px-2 py-1 mb-2 sm:mb-0"
+                >
+                  Delete
+                </button>
+              </div>
             </div>
           </>
         )}
@@ -62,5 +76,3 @@ const ExpenseItem = ({ expense, onEdit, onMarkAsDone, onDelete }) => {
 };
 
 export default ExpenseItem;
-
-

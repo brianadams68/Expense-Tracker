@@ -16,8 +16,8 @@ const ExpenseList = ({
   };
 
   return (
-    <div className="flex mt-10">
-      <div className="w-1/2 pr-4">
+    <div className="flex flex-wrap mt-10">
+      <div className="w-full sm:w-1/2 pr-4">
         <h2 className="text-xl font-semibold mb-4">Active Expenses</h2>
         <ul>
           {activeExpenses.map((expense) => (
@@ -31,7 +31,7 @@ const ExpenseList = ({
           ))}
         </ul>
       </div>
-      <div className="w-1/2 pl-4 items-center justify-between bg-white p-4 rounded-md shadow-md mb-4">
+      <div className="w-full sm:w-1/2 pl-4 items-center justify-between bg-white p-4 rounded-md shadow-md mb-4">
         <h2 className="text-xl font-semibold mb-4">Completed Expenses</h2>
         <ul>
           {completedExpenses.map((expense) => (
@@ -43,7 +43,7 @@ const ExpenseList = ({
         {completedExpenses.length > 0 && (
           <div className="mt-4">
             <p className="font-semibold">
-              Total Amount Expended: €{calculateTotalAmount()}
+              Total Expended: €{calculateTotalAmount()}
             </p>
           </div>
         )}

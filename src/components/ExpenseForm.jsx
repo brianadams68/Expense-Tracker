@@ -24,11 +24,14 @@ const ExpenseForm = ({ onAddExpense }) => {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white p-6 rounded-md shadow-md mt-8">
+    <div className="max-w-md mx-auto bg-white p-6 rounded-md shadow-md mt-8 sm:max-w-lg md:max-w-xl lg:max-w-2xl">
       <h2 className="text-2xl font-semibold mb-4">Add New Expense</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
-          <label htmlFor="title" className="block text-gray-700 text-sm font-bold mb-2">
+          <label
+            htmlFor="title"
+            className="block text-gray-700 text-sm font-bold mb-2"
+          >
             Title
           </label>
           <input
@@ -40,7 +43,10 @@ const ExpenseForm = ({ onAddExpense }) => {
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="amount" className="block text-gray-700 text-sm font-bold mb-2">
+          <label
+            htmlFor="amount"
+            className="block text-gray-700 text-sm font-bold mb-2"
+          >
             Amount
           </label>
           <input
