@@ -37,7 +37,7 @@ const ExpenseItem = ({ expense, onEdit, onMarkAsDone, onDelete }) => {
           <>
             <div>
               <span className="text-lg font-semibold">{title}</span>
-              <span className="ml-4 text-gray-600">${amount}</span>
+              <span className="ml-4 text-gray-600">€{amount}</span>
             </div>
             <div className="flex items-center">
               {!isDone && (
