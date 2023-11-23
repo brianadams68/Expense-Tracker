@@ -31,7 +31,7 @@ const ExpenseItem = ({ expense, onEdit, onMarkAsDone, onDelete }) => {
             />
             <button
               onClick={handleUpdate}
-              className="bg-green-500 text-white px-3 py-2 rounded-md"
+              className="bg-green-500 text-white px-3 py-2 rounded-md mb-2 sm:mb-0"
             >
               Update
             </button>
@@ -41,20 +41,20 @@ const ExpenseItem = ({ expense, onEdit, onMarkAsDone, onDelete }) => {
             <div className="max-w-md mx-auto bg-white p-6-md mt-8 sm:max-w-lg">
               <div className="mb-2 text-center">
                 <span className="text-lg font-semibold">{title}</span>
-                <span className="mt-1 text-gray-600">€{amount}</span>
+                <span className="mt-1 text-gray-600"> €{amount}</span>
               </div>
               <div className="flex items-center flex-wrap justify-center">
                 {!isDone && (
                   <>
                     <button
                       onClick={() => setIsEditing(true)}
-                      className="text-blue-500 px-2 py-1 mr-2 mb-2"
+                      className="text-blue-500 px-2 py-1 mr-2 mb-2 sm:mb-0"
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => onMarkAsDone(id)}
-                      className="text-green-500 px-2 py-1 mr-2 mb-2"
+                      className="text-green-500 px-2 py-1 mr-2 mb-2 sm:mb-0"
                     >
                       Done
                     </button>

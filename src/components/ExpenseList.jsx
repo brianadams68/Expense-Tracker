@@ -31,9 +31,9 @@ const ExpenseList = ({
           ))}
         </ul>
       </div>
-      <div className="w-full sm:w-1/2 pl-4 items-center justify-between bg-white p-4 rounded-md shadow-md mb-4">
+      <div className="w-full sm:w-1/2 pl-4 items-center justify-between bg-white">
         <h2 className="text-xl font-semibold mb-4">Completed Expenses</h2>
-        <ul>
+        <ul className="p-4 rounded-md shadow-md mb-4">
           {completedExpenses.map((expense) => (
             <li key={expense.id}>
               {expense.title} - €{expense.amount}
