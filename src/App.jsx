@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import ExpenseForm from "./components/ExpenseForm";
-import ExpenseList from "./components/ExpenseList";
+import CompletedExpenseList from "./components/CompletedExpenseList";
+import ActiveExpenseList from "./components/ActiveExpenseList";
 
 function App() {
   const [activeExpenses, setActiveExpenses] = useState([]);
@@ -62,51 +63,67 @@ function App() {
       setCompletedExpenses((prevCompletedExpenses) =>
         prevCompletedExpenses.filter((expense) => expense.id !== id)
       );
+      localStorage.setItem(
+        "expensesCompleted",
+        JSON.stringify(completedExpenses.filter((expense) => expense.id !== id))
+      );
     }
 
     setActiveExpenses(updatedActiveExpenses);
     saveExpensesToStorage(updatedActiveExpenses);
-
-    const storedCompletedExpenses =
-      JSON.parse(localStorage.getItem("expensesCompleted")) || [];
-    const updatedCompletedExpenses = storedCompletedExpenses.filter(
-      (expense) => expense.id !== id
-    );
-    localStorage.setItem(
-      "expensesCompleted",
-      JSON.stringify(updatedCompletedExpenses)
-    );
   };
 
   const editExpenseHandler = (id, updatedExpense) => {
     const updatedActiveExpenses = activeExpenses.map((expense) =>
       expense.id === id ? { ...expense, ...updatedExpense } : expense
     );
+
     setActiveExpenses(updatedActiveExpenses);
 
     const editedExpense = updatedActiveExpenses.find(
       (expense) => expense.id === id
     );
+
     if (editedExpense && editedExpense.isDone) {
-      setCompletedExpenses((prevCompletedExpenses) => [
-        editedExpense,
-        ...prevCompletedExpenses,
-      ]);
+      setCompletedExpenses((prevCompletedExpenses) =>
+        prevCompletedExpenses.map((expense) =>
+          expense.id === id ? { ...expense, ...updatedExpense } : expense
+        )
+      );
+      localStorage.setItem(
+        "expensesCompleted",
+        JSON.stringify(
+          completedExpenses.map((expense) =>
+            expense.id === id ? { ...expense, ...updatedExpense } : expense
+          )
+        )
+      );
     }
 
-    saveExpensesToStorage([...updatedActiveExpenses, ...completedExpenses]);
+    const allExpenses = [...updatedActiveExpenses, ...completedExpenses];
+    saveExpensesToStorage(allExpenses);
   };
 
   return (
     <>
       <ExpenseForm onAddExpense={addExpenseHandler} />
-      <ExpenseList
-        activeExpenses={activeExpenses}
-        completedExpenses={completedExpenses}
-        onEdit={editExpenseHandler}
-        onMarkAsDone={markAsDoneHandler}
-        onDelete={deleteExpenseHandler}
-      />
+      <div className="">
+        <div className="">
+          <ActiveExpenseList
+            activeExpenses={activeExpenses}
+            onEdit={editExpenseHandler}
+            onMarkAsDone={markAsDoneHandler}
+            onDelete={deleteExpenseHandler}
+          />
+        </div>
+        <div>
+          <CompletedExpenseList
+            completedExpenses={completedExpenses}
+            onEdit={editExpenseHandler}
+            onDelete={deleteExpenseHandler}
+          />
+        </div>
+      </div>
     </>
   );
 }
