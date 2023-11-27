@@ -11,6 +11,8 @@ const ExpenseItem = ({ expense, onEdit, onMarkAsDone, onDelete }) => {
     setIsEditing(false);
   };
 
+  console.log(isDone)
+
   return (
     <li>
       <div className="flex items-center justify-between bg-white p-4 rounded-md shadow-md mb-4">
@@ -42,22 +44,20 @@ const ExpenseItem = ({ expense, onEdit, onMarkAsDone, onDelete }) => {
                 <span className="text-lg font-semibold">{title}</span>
                 <span className="mt-1 text-gray-600"> €{amount}</span>
               </div>
-              <div className="flex items-center flex-wrap justify-center">      
-              {!isDone && (
-                <>
+              <div className="flex items-center flex-wrap justify-center"> 
                 <button
                       onClick={() => setIsEditing(true)}
                       className="text-blue-500 px-2 py-1 mr-2 mb-2 sm:mb-0"
                     >
                       Edit
                     </button>
+                    {!isDone && (
                     <button
                       onClick={() => onMarkAsDone(id)}
                       className="text-green-500 px-2 py-1 mr-2 mb-2 sm:mb-0"
                     >
                       Done
                     </button>
-                </>
                 )}
                 <button
                   onClick={() => onDelete(id)}

@@ -5,100 +5,48 @@ import CompletedExpenseList from "./components/CompletedExpenseList";
 import ActiveExpenseList from "./components/ActiveExpenseList";
 
 function App() {
-  const [activeExpenses, setActiveExpenses] = useState([]);
-  const [completedExpenses, setCompletedExpenses] = useState([]);
+  const [expenses, setExpenses] = useState(() => {
+    const storedExpenses = localStorage.getItem("expenses");
+    return storedExpenses ? JSON.parse(storedExpenses) : [];
+  });
 
   useEffect(() => {
-    const storedExpenses = JSON.parse(localStorage.getItem("expenses")) || [];
-    const storedCompletedExpenses =
-      JSON.parse(localStorage.getItem("expensesCompleted")) || [];
+    localStorage.setItem("expenses", JSON.stringify(expenses));
+  }, [expenses]);
 
-    const active = storedExpenses.filter((expense) => !expense.isDone);
-    const completed = storedCompletedExpenses;
-
-    setActiveExpenses(active);
-    setCompletedExpenses(completed);
-  }, []);
-
-  const saveExpensesToStorage = (allExpenses) => {
-    localStorage.setItem("expenses", JSON.stringify(allExpenses));
-  };
   const addExpenseHandler = (newExpense) => {
-    const updatedActiveExpenses = [newExpense, ...activeExpenses];
-    setActiveExpenses(updatedActiveExpenses);
-
-    const allExpenses = [...updatedActiveExpenses, ...completedExpenses];
-    saveExpensesToStorage(allExpenses);
+    setExpenses([...expenses, newExpense]);
   };
 
   const markAsDoneHandler = (id) => {
-    const updatedActiveExpenses = activeExpenses.filter(
-      (expense) => expense.id !== id
+    setExpenses((prevExpenses) =>
+      prevExpenses.map((e) =>
+        e.id === id ? { ...e, isDone: true } : e
+      )
     );
-    const completedExpense = activeExpenses.find(
-      (expense) => expense.id === id
-    );
-
-    setCompletedExpenses((prevCompletedExpenses) => [
-      completedExpense,
-      ...prevCompletedExpenses,
-    ]);
-    setActiveExpenses(updatedActiveExpenses);
-
-    localStorage.setItem(
-      "expensesCompleted",
-      JSON.stringify([...completedExpenses, completedExpense])
-    );
-
-    saveExpensesToStorage(updatedActiveExpenses);
   };
 
   const deleteExpenseHandler = (id) => {
-    const deletedExpense = activeExpenses.find((expense) => expense.id === id);
-    const updatedActiveExpenses = activeExpenses.filter(
-      (expense) => expense.id !== id
+    setExpenses((prevExpenses) =>
+      prevExpenses.filter((e) => e.id !== id)
     );
-
-      localStorage.setItem(
-        "expensesCompleted",
-        JSON.stringify(completedExpenses.filter((expense) => expense.id !== id))
-      );
-
-    setActiveExpenses(updatedActiveExpenses);
-    saveExpensesToStorage(updatedActiveExpenses);
   };
 
-  const editExpenseHandler = (id, updatedExpense) => {
-    const updatedActiveExpenses = activeExpenses.map((expense) =>
-      expense.id === id ? { ...expense, ...updatedExpense } : expense
+  const editExpenseHandler = (id, updatedData) => {
+    setExpenses((prevExpenses) =>
+      prevExpenses.map((e) =>
+        e.id === id ? { ...e, ...updatedData } : e
+      )
     );
-  
-    setActiveExpenses(updatedActiveExpenses);
-  
-    const updateCompletedExpense = completedExpenses.map((expense) => 
-      expense.id === id ? { ...expense, ...updatedExpense } : expense
-    );
-
-    setCompletedExpenses(updateCompletedExpense);
-  
-      localStorage.setItem(
-        "expensesCompleted",
-        JSON.stringify(
-          completedExpenses.map((expense) =>
-            expense.id === id ? { ...expense, ...updatedExpense } : expense
-          )
-        )
-      );
   };
-   
-  
+
   return (
     <>
       <ExpenseForm onAddExpense={addExpenseHandler} />
       <div className="">
         <div className="">
           <ActiveExpenseList
-            activeExpenses={activeExpenses}
+            activeExpenses={expenses.filter((e) => !e.isDone)}
             onEdit={editExpenseHandler}
             onMarkAsDone={markAsDoneHandler}
             onDelete={deleteExpenseHandler}
@@ -106,7 +54,7 @@ function App() {
         </div>
         <div>
           <CompletedExpenseList
-            completedExpenses={completedExpenses}
+            completedExpenses={expenses.filter((e) => e.isDone)}
             onEdit={editExpenseHandler}
             onDelete={deleteExpenseHandler}
           />
@@ -117,3 +65,5 @@ function App() {
 }
 
 export default App;
+
+
