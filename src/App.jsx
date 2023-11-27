@@ -42,9 +42,10 @@ function App() {
 
   return (
     <>
-      <ExpenseForm onAddExpense={addExpenseHandler} />
-      <div className="">
-        <div className="">
+    <ExpenseForm onAddExpense={addExpenseHandler} />
+    <div className="flex justify-center">
+      <div className="flex flex-wrap w-full max-w-screen-lg justify-center ">
+        <div className="mb-4 w-full sm:w-1/2">
           <ActiveExpenseList
             activeExpenses={expenses.filter((e) => !e.isDone)}
             onEdit={editExpenseHandler}
@@ -52,7 +53,7 @@ function App() {
             onDelete={deleteExpenseHandler}
           />
         </div>
-        <div>
+        <div className="mb-4 w-full sm:w-1/2">
           <CompletedExpenseList
             completedExpenses={expenses.filter((e) => e.isDone)}
             onEdit={editExpenseHandler}
@@ -60,7 +61,8 @@ function App() {
           />
         </div>
       </div>
-    </>
+    </div>
+  </>  
   );
 }
 

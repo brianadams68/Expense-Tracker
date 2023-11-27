@@ -2,16 +2,15 @@ import React from "react";
 import ExpenseItem from "./ExpenseItem";
 
 const ActiveExpenseList = ({ activeExpenses, onEdit, onMarkAsDone, onDelete }) => {
-  console.log("Received active expenses:", activeExpenses);
-
-  const expensesToRender = activeExpenses || [];
 
   return (
-    <div className="flex flex-wrap mt-10">
-      <div className="w-full sm:w-1/2 pr-4">
-        <h2 className="text-xl font-semibold mb-4">Active Expenses</h2>
+      <div className="w-full sm:w-1/2">
+        <h2 className="text-xl font-semibold mb-4 my-10">Active Expenses</h2>
+        {activeExpenses.length === 0 ? (
+        <p className="text-gray-600">There is no active expense.</p>
+      ) : (
         <ul>
-          {expensesToRender.map((expense) => (
+          {activeExpenses.map((expense) => (
             <ExpenseItem
               key={expense.id}
               expense={expense}
@@ -21,8 +20,8 @@ const ActiveExpenseList = ({ activeExpenses, onEdit, onMarkAsDone, onDelete }) =
             />
           ))}
         </ul>
+      )}
       </div>
-    </div>
   );
 };
 
