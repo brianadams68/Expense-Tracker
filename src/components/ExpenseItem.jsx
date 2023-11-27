@@ -8,7 +8,6 @@ const ExpenseItem = ({ expense, onEdit, onMarkAsDone, onDelete }) => {
 
   const handleUpdate = () => {
     onEdit(id, { title: updatedTitle, amount: updatedAmount });
-
     setIsEditing(false);
   };
 
@@ -43,10 +42,10 @@ const ExpenseItem = ({ expense, onEdit, onMarkAsDone, onDelete }) => {
                 <span className="text-lg font-semibold">{title}</span>
                 <span className="mt-1 text-gray-600"> €{amount}</span>
               </div>
-              <div className="flex items-center flex-wrap justify-center">
-                {!isDone && (
-                  <>
-                    <button
+              <div className="flex items-center flex-wrap justify-center">      
+              {!isDone && (
+                <>
+                <button
                       onClick={() => setIsEditing(true)}
                       className="text-blue-500 px-2 py-1 mr-2 mb-2 sm:mb-0"
                     >
@@ -58,7 +57,7 @@ const ExpenseItem = ({ expense, onEdit, onMarkAsDone, onDelete }) => {
                     >
                       Done
                     </button>
-                  </>
+                </>
                 )}
                 <button
                   onClick={() => onDelete(id)}

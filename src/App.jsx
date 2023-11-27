@@ -59,15 +59,10 @@ function App() {
       (expense) => expense.id !== id
     );
 
-    if (deletedExpense && deletedExpense.isDone) {
-      setCompletedExpenses((prevCompletedExpenses) =>
-        prevCompletedExpenses.filter((expense) => expense.id !== id)
-      );
       localStorage.setItem(
         "expensesCompleted",
         JSON.stringify(completedExpenses.filter((expense) => expense.id !== id))
       );
-    }
 
     setActiveExpenses(updatedActiveExpenses);
     saveExpensesToStorage(updatedActiveExpenses);
@@ -77,19 +72,15 @@ function App() {
     const updatedActiveExpenses = activeExpenses.map((expense) =>
       expense.id === id ? { ...expense, ...updatedExpense } : expense
     );
-
+  
     setActiveExpenses(updatedActiveExpenses);
-
-    const editedExpense = updatedActiveExpenses.find(
-      (expense) => expense.id === id
+  
+    const updateCompletedExpense = completedExpenses.map((expense) => 
+      expense.id === id ? { ...expense, ...updatedExpense } : expense
     );
 
-    if (editedExpense && editedExpense.isDone) {
-      setCompletedExpenses((prevCompletedExpenses) =>
-        prevCompletedExpenses.map((expense) =>
-          expense.id === id ? { ...expense, ...updatedExpense } : expense
-        )
-      );
+    setCompletedExpenses(updateCompletedExpense);
+  
       localStorage.setItem(
         "expensesCompleted",
         JSON.stringify(
@@ -98,12 +89,9 @@ function App() {
           )
         )
       );
-    }
-
-    const allExpenses = [...updatedActiveExpenses, ...completedExpenses];
-    saveExpensesToStorage(allExpenses);
   };
-
+   
+  
   return (
     <>
       <ExpenseForm onAddExpense={addExpenseHandler} />
