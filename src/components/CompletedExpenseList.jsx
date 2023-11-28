@@ -1,15 +1,14 @@
 import React from "react";
 import ExpenseItem from "./ExpenseItem";
 
-const CompletedExpenseList = ({ completedExpenses, onEdit, onDelete }) => {
-  // Calculate the total expenditure
+const CompletedExpenseList = ({ completedExpenses, onEdit, onDelete, dateAdded }) => {
   const totalExpenditure = completedExpenses.reduce(
     (total, expense) => total + Number(expense.amount),
     0
   );
 
   return (
-    <div className="w-full sm:w-1/2">
+    <div className="ml-2">
       <h2 className="text-xl font-semibold mb-4 my-10">Completed Expenses</h2>
       {completedExpenses.length === 0 ? (
         <p className="text-gray-600">There are no completed expenses.</p>
@@ -22,6 +21,7 @@ const CompletedExpenseList = ({ completedExpenses, onEdit, onDelete }) => {
                 expense={expense}
                 onEdit={onEdit}
                 onDelete={onDelete}
+                dateAdded={dateAdded}
               />
             ))}
           </ul>
@@ -33,6 +33,3 @@ const CompletedExpenseList = ({ completedExpenses, onEdit, onDelete }) => {
 };
 
 export default CompletedExpenseList;
-
-
-
